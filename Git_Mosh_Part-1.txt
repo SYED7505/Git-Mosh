@@ -1,0 +1,158 @@
+Issues:
+Issue pushing local repo to github,
+
+
+Configuring git
+
+system - all users
+global - all repos for current user
+local -  current repo
+
+
+
+git config --global user.name "Syed7505"
+git config --global user.email syed_zabiulla@thbs.com
+
+
+
+
+//set the default editor
+git config --global core.editor	"code --wait"
+
+
+
+//open default editor to edit all global setting
+git config --global -e
+
+
+
+end of line in windows is represented by carriage return(\r) and line feed(\n), 
+and in mac end of line is represented Only by line feed (\n).
+example:
+abc\r\n
+
+//carriage return, line feed
+git config --global core.autocrlf true - for Windows
+git config --global core.autocrlf input - for Mac
+
+
+
+
+// view .git file which is hidden
+ls -a (in git bash to list all the files)
+example: C:\Users\syed_zabiulla\THBS April\Moon GIT Mosh\.git
+//Deleting .git file, if we remove this we lose our history
+rm -rf .git
+
+
+
+Initializing a repository
+git init 
+
+
+Staging files
+git add file1.js # stage one file
+git add *.js # stage files with pattern
+git add . # stages current directory and all its content
+
+
+Committing the staged files
+git commit -m "Message" # commits with one line message
+git commit # opends the default editor to type a long message
+
+Important notes: 
+1)After staging and committing the files, the files are still present in staging area.
+2)If the file was staged, then deleted later from directory, then it has to be removed 
+from staging area with command 'git add file1.txt' and make a commit as Remove file etc.
+3)To delete the file from both directory and staging area at a time, we can use git command 'git rm file1.txt'
+4)To remove the file only from staging area 'git rm --cached file1.txt'
+
+
+3 places to look at
+working directory -> staging area -> repository
+
+
+
+Committing best practices
+Commit often, as a single unit of work
+wording: messages in commit should be in present tense:
+example: Fix the bug (✔)
+example: Fixed the bug (X)
+
+
+
+Skipping the staging area
+git commit -a -m "Fix the bug that prevented users from signing up"
+
+
+Scenario, deleting a file from the directory
+rm file2.txt # note if its a git command it starts with git..
+but if it was staged the file will be still present in staging area
+
+View files in staging area command
+git ls-files
+
+Removing files
+git rm file1.js # removes from working directory and staging area
+git rm --cached file1.js # removes from staging area only 
+
+
+Renaming is two step process
+example:
+mv file1.txt main.js
+
+git add file1.txt # to remove from staging area
+git add main.js # to add the untracked file into staging area
+
+# git will recognise that file1.txt was renamed to main.js
+
+Using git command for renaming or moving files
+
+git mv main.js file1.txt
+#its done in only 1 step now.
+
+Ignoring files
+A .gitignore file must be created to ignore files which dont need to be tracked.
+
+Important notes:
+1)If we accidentally stage a file which we wanted to ignore, later add it .gitignore, 
+but the git will still track that file or folder.
+2)Hence we can use git rm --cached filename to remove only from staging area, incase we have a folder to remove, we need to use git rm --cached -r folderName.
+else it will throw error "fatal:not removing 'folderName/' recursively without -r", we can get this kind of help by 'git rm -h'
+
+
+
+Viewing staged/unstaged changes
+git diff # Shows unstaged changes (compares copy of directory to staging area copy)
+git diff --staged # Shows staged changes (compares copy of staging area to committed copy)
+
+git --global diff.tool vscode # setting vscode as default diff tool
+git --global difftool.vscode.cmd "code --wait --diff $LOCAL $REMOTE"
+
+
+
+Viewing the history
+git log # Full history 
+git log --oneline # Summary
+
+HEAD -> master # master is the main branch, HEAD is a reference pointing to current branch.
+
+
+
+Viewing a commit 
+git show 921a2ff # shows the given commit
+git show HEAD # shows the last commit
+
+
+
+git restore --staged file1.js # unstages the changes that were previously staged but not yet committed.
+vs 
+git rm --cached file1.js # removes from staging area and stops tracking it.
+
+git restore file1.js # undo the local changes, and git takes the version of this file 
+from next environment (ie staging env) and copy it to working directory.
+
+
+Restoring file to an earlier version
+git restore --source=HEAD~1 filename # this will restore/replace the file contents to that specific commit, 
+also if the file was deleted (git rm filename), it can be restored using this method.

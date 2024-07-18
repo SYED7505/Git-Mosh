@@ -1,0 +1,11 @@
+Collaboration.
+
+
+origin/master - origin is the source/remote repo, present on github, origin/master tells us where is master on that repo.
+hence it tells us where is master branch in origin. (Remote tracking branch)
+
+git remote # Shows list of remote repositories
+git remote -v # Shows verbose ie more details about the remote repository
+
+git pull 
+git push origin main

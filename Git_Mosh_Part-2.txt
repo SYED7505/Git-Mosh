@@ -1,0 +1,55 @@
+Branching 
+
+git branch bugfix # creates a new branch called bugfix
+git checkout bugfix # switches to bugfix branch
+git switch bugfix # switches to bugfix branch (more likeable command)
+git switch -C bugfix/login-form # creates a new branch and switches to that branch
+git branch -m bugfix bugfix/signup-form # rename a branch 'currentBranchName' 'newBranchName'
+git branch -M bugfix/signup-form # renames the current branch to the given name forcefully even if branch with same name exists
+git branch -d bugfix # deletes the bugfix branch (replace -d with -D for force deletion when branch is not yet merged)
+
+
+
+git log --oneline --all # to see commits across all branches
+
+
+
+Comparing branches
+git log master..bugfix # lists the commits in the bugfix branch not in master 
+git diff master..bugfix # shows the summary of changes
+
+
+
+Stashing
+if we made some local changes to the directory and did not stage/commit it yet and have 
+to switch to other branch, we can stash the changes to make directory clean again, and 
+switch to the other branch.
+
+git stash push -m “New tax rules” # Creates a new stash 
+
+git stash list # Lists all the stashes 
+stash@{0}: On master: New rule for payment
+
+git stash show stash@{0} # Shows the given stash 
+git stash show 0 # shortcut for stash@{0} 
+git stash apply 0 # Applies the given stash to the working dir
+git stash drop 0 # Removes from stash list
+git stash clear # Clears entire stash list	
+
+
+Merges
+fast-forward (if branches have not diverged, the pointer (master & HEAD) simply fast-forwards to that branch as its linear)
+three-way (if branches have diverged, its called 3 way as it creates a merge commit)
+
+git merge bugfix # Merges the bugfix branch into the current branch
+
+Important notes:
+1)There are both pros and cons of using fast-forward merge.
+2)We can disable fast-forward merge for the repo/all repos, if required.
+
+
+
+
+Viewing the merged branches 
+git branch --merged # Shows the merged branches 
+git branch --no-merged # Shows the unmerged branches
